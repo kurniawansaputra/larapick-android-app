@@ -1,0 +1,24 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menuPickupLogs"
+        android:title="@string/logs_pickup"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menuProfile"
+        android:title="@string/profile_guardian"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menuChangePassword"
+        android:title="@string/change_password"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menuLogout"
+        android:title="@string/logout"
+        app:showAsAction="never" />
+
+</menu>
