@@ -8,57 +8,121 @@
     android:orientation="vertical"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.appcompat.widget.LinearLayoutCompat
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="16dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="16dp">
 
         <TextView
             android:id="@+id/textDate"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textAppearance="@style/TextView.CustomFontMedium"
             android:textSize="14sp"
-            android:drawablePadding="8dp"
-            app:drawableStartCompat="@drawable/ic_pick"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             tools:ignore="TextContrastCheck"
             tools:text="2024-05-23 20:29:07" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:id="@+id/labelGuardian"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="4dp"
             android:text="@string/pickup"
             android:textAppearance="@style/TextView.CustomFontMedium"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            app:layout_constraintEnd_toStartOf="@+id/labelAdmin"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textDate" />
 
         <TextView
             android:id="@+id/textGuardian"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="4dp"
             android:textAppearance="@style/TextView.CustomFontRegular"
             android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="@+id/labelGuardian"
+            app:layout_constraintStart_toStartOf="@+id/labelGuardian"
+            app:layout_constraintTop_toBottomOf="@+id/labelGuardian"
             tools:text="Trystan Turcotte" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:id="@+id/labelAdmin"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginStart="4dp"
             android:text="@string/confirm"
             android:textAppearance="@style/TextView.CustomFontMedium"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/labelGuardian"
+            app:layout_constraintTop_toTopOf="@+id/labelGuardian" />
 
         <TextView
             android:id="@+id/textAdmin"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
             android:textAppearance="@style/TextView.CustomFontRegular"
             android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="@+id/labelAdmin"
+            app:layout_constraintStart_toStartOf="@+id/labelAdmin"
+            app:layout_constraintTop_toTopOf="@+id/textGuardian"
             tools:text="Trystan Turcotte" />
 
-    </androidx.appcompat.widget.LinearLayoutCompat>
+        <TextView
+            android:id="@+id/labelNote"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/note"
+            android:textAppearance="@style/TextView.CustomFontMedium"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/textGuardian"
+            app:layout_constraintTop_toBottomOf="@+id/textGuardian" />
+
+        <TextView
+            android:id="@+id/textNote"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:textAppearance="@style/TextView.CustomFontRegular"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="@+id/labelNote"
+            app:layout_constraintStart_toStartOf="@+id/labelNote"
+            app:layout_constraintTop_toBottomOf="@+id/labelNote"
+            tools:text="Id laboriosam similique mollitia nam." />
+
+        <Button
+            android:id="@+id/buttonSeeImage"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/see_image"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textNote"
+            tools:ignore="VisualLintButtonSize" />
+
+        <Button
+            android:id="@+id/buttonConfirm"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/arrive"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/buttonSeeImage"
+            tools:ignore="VisualLintButtonSize,DuplicateSpeakableTextCheck" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </com.google.android.material.card.MaterialCardView>

@@ -2,6 +2,7 @@ package id.go.kebumenkab.larapick.ui.resultscan
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -10,6 +11,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.lifecycleScope
+import com.google.gson.Gson
 import id.go.kebumenkab.larapick.R
 import id.go.kebumenkab.larapick.data.response.DefaultResponse
 import id.go.kebumenkab.larapick.data.response.UserResponse
@@ -19,16 +22,25 @@ import id.go.kebumenkab.larapick.pref.UserPreference
 import id.go.kebumenkab.larapick.ui.imageview.ImageViewActivity
 import id.go.kebumenkab.larapick.ui.main.MainActivity
 import id.go.kebumenkab.larapick.util.loadImage
+import id.go.kebumenkab.larapick.util.reduceFileImage
 import id.go.kebumenkab.larapick.util.setLoading
+import id.go.kebumenkab.larapick.util.uriToFile
+import kotlinx.coroutines.launch
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.Call
+import retrofit2.HttpException
 import retrofit2.Response
+import retrofit2.await
 import kotlin.properties.Delegates
 
 class ResultScanActivity : AppCompatActivity() {
     private lateinit var qrCode: String
     private lateinit var token: String
     private lateinit var studentName: String
-    private lateinit var studentClass: String
+    private lateinit var studentGrade: String
     private lateinit var studentImage: String
     private lateinit var guardianName: String
     private lateinit var guardianGender: String
@@ -41,6 +53,8 @@ class ResultScanActivity : AppCompatActivity() {
     private var guardianId by Delegates.notNull<Int>()
     private var studentId by Delegates.notNull<Int>()
     private var adminId by Delegates.notNull<Int>()
+    private var currentImageUri: Uri? = null
+    private var note: String? = null
 
     private lateinit var binding: ActivityResultScanBinding
 
@@ -97,7 +111,7 @@ class ResultScanActivity : AppCompatActivity() {
                             labelStudentNotFound.visibility = View.GONE
 
                             studentName = data?.student?.name.toString()
-                            studentClass = data?.student?.grade?.name.toString()
+                            studentGrade = data?.student?.grade?.name.toString()
                             studentImage = data?.student?.image.toString()
 
                             guardianName = data?.name.toString()
@@ -113,7 +127,7 @@ class ResultScanActivity : AppCompatActivity() {
                             guardianId = data.id!!
 
                             textStudentName.text = studentName
-                            textStudentClass.text = studentClass
+                            textStudentGrade.text = "Kelas.$studentGrade"
                             loadImage(this@ResultScanActivity, ivStudentImage, studentImage, studentName)
 
                             if (guardianGender == "male") {
@@ -168,31 +182,60 @@ class ResultScanActivity : AppCompatActivity() {
     }
 
     private fun confirm() {
+        val imageFile = currentImageUri?.let { uri ->
+            uriToFile(uri, this).reduceFileImage()
+        }
+
+        Log.d("Image File", "showImage: ${imageFile?.path}")
+
         setLoading(this, true)
-        val client = ApiConfig.getApiService().pickup("Bearer $token", studentId, guardianId, adminId)
-        client.enqueue(object : retrofit2.Callback<DefaultResponse> {
-            override fun onResponse(call: Call<DefaultResponse>, response: Response<DefaultResponse>) {
-                setLoading(this@ResultScanActivity, false)
-                if (response.isSuccessful) {
-                    val status = response.body()?.status
-                    val message = response.body()?.message
 
-                    if (status == true) {
-                        goToMain()
-                        Toast.makeText(this@ResultScanActivity, "Penjemput berhasil dikonfirmasi", Toast.LENGTH_SHORT).show()
-                    } else {
-                        Toast.makeText(this@ResultScanActivity, message, Toast.LENGTH_SHORT).show()
-                    }
-                } else {
-                    Log.d(TAG, "onFailure: ${response.message()}")
-                }
-            }
+        val requestBodyStudentId = studentId.toString().toRequestBody("text/plain".toMediaType())
+        val requestBodyGuardianId = guardianId.toString().toRequestBody("text/plain".toMediaType())
+        val requestBodyAdminId = adminId.toString().toRequestBody("text/plain".toMediaType())
+        val requestBodyStatus = "done".toRequestBody("text/plain".toMediaType())
+        val requestBodyNote = note?.toRequestBody("text/plain".toMediaType())
 
-            override fun onFailure(call: Call<DefaultResponse>, t: Throwable) {
+        val requestImageFile = imageFile?.asRequestBody("image/jpeg".toMediaType())
+        val multipartBodyImage = requestImageFile?.let {
+            MultipartBody.Part.createFormData(
+                "image",
+                imageFile.name,
+                it
+            )
+        }
+
+        lifecycleScope.launch {
+            try {
+                val apiService = ApiConfig.getApiService()
+                val successResponse = apiService.pickup(
+                    "Bearer $token",
+                    requestBodyStudentId,
+                    requestBodyGuardianId,
+                    requestBodyAdminId,
+                    requestBodyStatus,
+                    requestBodyNote,
+                    multipartBodyImage
+                ).await()
+
+                Toast.makeText(
+                    this@ResultScanActivity,
+                    successResponse.message,
+                    Toast.LENGTH_SHORT
+                ).show()
                 setLoading(this@ResultScanActivity, false)
-                Log.d(TAG, "onFailure: ${t.message}")
+                goToMain()
+            } catch (e: HttpException) {
+                val errorBody = e.response()?.errorBody()?.string()
+                val errorResponse = Gson().fromJson(errorBody, DefaultResponse::class.java)
+                Toast.makeText(
+                    this@ResultScanActivity,
+                    errorResponse.message,
+                    Toast.LENGTH_SHORT
+                ).show()
+                setLoading(this@ResultScanActivity, false)
             }
-        })
+        }
     }
 
     private fun goToMain() {
@@ -201,6 +244,7 @@ class ResultScanActivity : AppCompatActivity() {
         startActivity(intent)
         finish()
     }
+
     private fun setLoading(isLoading: Boolean) {
         binding.apply {
             if (isLoading) {

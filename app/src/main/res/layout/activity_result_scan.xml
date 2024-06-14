@@ -48,7 +48,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -62,34 +61,38 @@
                         android:layout_width="65dp"
                         android:layout_height="65dp"
                         android:layout_gravity="center"
+                        android:src="@color/md_theme_primary"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <TextView
-                        android:id="@+id/textStudentName"
+                    <androidx.appcompat.widget.LinearLayoutCompat
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
                         android:layout_marginStart="16dp"
-                        android:textAppearance="@style/TextView.CustomFontMedium"
-                        android:textSize="14sp"
+                        android:orientation="vertical"
+                        app:layout_constraintBottom_toBottomOf="@+id/ivStudentImage"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/ivStudentImage"
-                        app:layout_constraintTop_toTopOf="@+id/ivStudentImage"
-                        tools:text="James Peterson" />
+                        app:layout_constraintTop_toTopOf="@+id/ivStudentImage">
 
-                    <TextView
-                        android:id="@+id/textStudentClass"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="8dp"
-                        android:textAppearance="@style/TextView.CustomFontRegular"
-                        android:textSize="14sp"
-                        app:layout_constraintEnd_toEndOf="@+id/textStudentName"
-                        app:layout_constraintStart_toStartOf="@+id/textStudentName"
-                        app:layout_constraintTop_toBottomOf="@+id/textStudentName"
-                        tools:text="dolorem" />
+                        <TextView
+                            android:id="@+id/textStudentName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="@style/TextView.CustomFontMedium"
+                            android:textSize="16sp"
+                            tools:text="James Peterson" />
+
+                        <TextView
+                            android:id="@+id/textStudentGrade"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:textAppearance="@style/TextView.CustomFontRegular"
+                            android:textSize="14sp"
+                            tools:text="Kelas.rerum" />
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

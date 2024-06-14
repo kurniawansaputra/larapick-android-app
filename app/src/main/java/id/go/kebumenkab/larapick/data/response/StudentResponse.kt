@@ -2,11 +2,14 @@ package id.go.kebumenkab.larapick.data.response
 
 import com.google.gson.annotations.SerializedName
 
-data class DefaultResponse(
+data class StudentResponse(
+
+	@field:SerializedName("data")
+	val data: List<Student?>? = null,
 
 	@field:SerializedName("message")
-	val message: String,
+	val message: String? = null,
 
 	@field:SerializedName("status")
-	val status: Boolean
+	val status: Boolean? = null
 )

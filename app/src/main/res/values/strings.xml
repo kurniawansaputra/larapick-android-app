@@ -21,7 +21,7 @@
     <string name="email">Email</string>
     <string name="welcome">Selamat Datang</string>
     <string name="description_welcome">Masuk ke aplikasi dengan akun yang sudah terdaftar</string>
-    <string name="warning_scan_qr_code">Harap lakukan scan QR Code yang diberikan oleh orang tua siswa dan lakukan konfirmasi penjemputan.</string>
+    <string name="desc_scan_qr_code">Harap lakukan scan QR Code yang diberikan oleh orang tua siswa dan lakukan konfirmasi penjemputan.</string>
     <string name="scan_qr_code">Scan QR Code</string>
     <string name="old_password">Password Lama</string>
     <string name="new_password">Password Baru</string>
@@ -38,4 +38,13 @@
     <string name="data_not_found">Data tidak ditemukan</string>
     <string name="profile_pickuper">Data Diri Penjemput</string>
     <string name="no_image">No Image</string>
+    <string name="note">Catatan</string>
+    <string name="see_image">Lihat Gambar</string>
+    <string name="nik">NIK</string>
+    <string name="other_pickup">Penjemputan Lainnya</string>
+    <string name="arrive">Tiba</string>
+    <string name="desc_other_pickup">Harap isi form berikut untuk penjemputan lainnya. Misal penjemputan oleh ojek online.</string>
+    <string name="student">Siswa</string>
+    <string name="submit">Submit</string>
+    <string name="image">Foto</string>
 </resources>

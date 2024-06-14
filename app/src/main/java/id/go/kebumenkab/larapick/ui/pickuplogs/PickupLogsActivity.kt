@@ -14,8 +14,8 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import id.go.kebumenkab.larapick.data.retrofit.ApiConfig
 import id.go.kebumenkab.larapick.R
-import id.go.kebumenkab.larapick.data.response.PickupLogs
-import id.go.kebumenkab.larapick.data.response.PickupLogsResponse
+import id.go.kebumenkab.larapick.data.response.PickupLog
+import id.go.kebumenkab.larapick.data.response.PickupLogResponse
 import id.go.kebumenkab.larapick.databinding.ActivityPickupLogsBinding
 import id.go.kebumenkab.larapick.databinding.LayoutDialogFilterByMonthBinding
 import id.go.kebumenkab.larapick.pref.UserPreference
@@ -25,6 +25,7 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
+import kotlin.properties.Delegates
 
 class PickupLogsActivity : AppCompatActivity() {
     private val months = arrayOf(
@@ -45,6 +46,7 @@ class PickupLogsActivity : AppCompatActivity() {
     private var selectedMonth: String? = getDefaultMonthValue()
     private var selectedYear: String? = getDefaultYearValue()
     private lateinit var token: String
+    private var studentId by Delegates.notNull<Int>()
 
     private lateinit var binding: ActivityPickupLogsBinding
 
@@ -71,6 +73,7 @@ class PickupLogsActivity : AppCompatActivity() {
         if (user != null) {
             token = user.accessToken.toString()
         }
+        studentId = user?.data?.student?.id!!
     }
 
     private fun setToolbar() {
@@ -98,9 +101,9 @@ class PickupLogsActivity : AppCompatActivity() {
     @Suppress("UNCHECKED_CAST")
     private fun getPickupLogs() {
         setLoading(true)
-        val client = ApiConfig.getApiService().getPickupLogs("Bearer $token", selectedYear!!.toInt(), selectedMonth!!.toInt())
-        client.enqueue(object : retrofit2.Callback<PickupLogsResponse> {
-            override fun onResponse(call: Call<PickupLogsResponse>, response: Response<PickupLogsResponse>) {
+        val client = ApiConfig.getApiService().getPickupLogs("Bearer $token", studentId,  selectedYear!!.toInt(), selectedMonth!!.toInt(), "done")
+        client.enqueue(object : retrofit2.Callback<PickupLogResponse> {
+            override fun onResponse(call: Call<PickupLogResponse>, response: Response<PickupLogResponse>) {
                 setLoading(false)
                 binding.swipeRefresh.isRefreshing = false
                 if (response.isSuccessful) {
@@ -108,7 +111,7 @@ class PickupLogsActivity : AppCompatActivity() {
                     val data = response.body()?.data
 
                     if (status == true) {
-                        val pickupLogsAdapter = PickupLogsAdapter(data as ArrayList<PickupLogs>)
+                        val pickupLogsAdapter = PickupLogsAdapter(data as ArrayList<PickupLog>)
                         binding.rvLog.adapter = pickupLogsAdapter
                         binding.rvLog.setHasFixedSize(true)
 
@@ -121,7 +124,7 @@ class PickupLogsActivity : AppCompatActivity() {
                 }
             }
 
-            override fun onFailure(call: Call<PickupLogsResponse>, t: Throwable) {
+            override fun onFailure(call: Call<PickupLogResponse>, t: Throwable) {
                 setLoading(false)
                 binding.swipeRefresh.isRefreshing = false
                 Log.d(TAG, "onFailure: ${t.message}")
