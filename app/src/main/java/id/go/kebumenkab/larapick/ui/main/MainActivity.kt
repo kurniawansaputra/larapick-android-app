@@ -34,6 +34,7 @@ import id.go.kebumenkab.larapick.ui.otherpickup.OtherPickupActivity
 import id.go.kebumenkab.larapick.ui.pickuplogs.PickupLogsActivity
 import id.go.kebumenkab.larapick.ui.pickuplogs.PickupLogsAdapter
 import id.go.kebumenkab.larapick.ui.profile.ProfileActivity
+import id.go.kebumenkab.larapick.ui.profilestudent.ProfileStudentActivity
 import id.go.kebumenkab.larapick.ui.scan.ScanActivity
 import id.go.kebumenkab.larapick.util.loadImage
 import id.go.kebumenkab.larapick.util.setLoading
@@ -121,6 +122,11 @@ class MainActivity : AppCompatActivity() {
                 }
             } else {
                 buttonShowQRCode.isEnabled = false
+            }
+
+            buttonProfileStudent.setOnClickListener {
+                val intent = Intent(this@MainActivity, ProfileStudentActivity::class.java)
+                startActivity(intent)
             }
 
             buttonScanQrCode.setOnClickListener {

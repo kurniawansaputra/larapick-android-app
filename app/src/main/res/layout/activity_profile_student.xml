@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.profilestudent.ProfileStudentActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/topAppBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="?attr/actionBarSize"
+            app:navigationIcon="@drawable/ic_back"
+            app:title="Data Diri Anak"
+            app:titleTextAppearance="@style/TitleTextAppearance"/>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:contentDescription="@string/content_description"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingHorizontal="16dp"
+            android:paddingTop="16dp"
+            android:paddingBottom="24dp"
+            android:orientation="vertical">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/ivImage"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
+                android:layout_gravity="center"
+                android:src="@color/md_theme_primary" />
+
+            <TextView
+                android:id="@+id/textName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:textAppearance="@style/TextView.CustomFontMedium"
+                android:textSize="16sp"
+                android:layout_gravity="center"
+                tools:text="James Peterson" />
+
+            <TextView
+                android:id="@+id/textGrade"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:textAppearance="@style/TextView.CustomFontRegular"
+                android:textSize="14sp"
+                android:layout_gravity="center"
+                tools:text="Kelas.Libero" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/containerStudent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/status"
+                    android:textAppearance="@style/TextView.CustomFontMedium"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/textStudentStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:textAppearance="@style/TextView.CustomFontRegular"
+                    android:textSize="14sp"
+                    tools:text="Aktif" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/gender"
+                    android:layout_marginTop="16dp"
+                    android:textAppearance="@style/TextView.CustomFontMedium"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/textStudentGender"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:textAppearance="@style/TextView.CustomFontRegular"
+                    android:textSize="14sp"
+                    tools:text="Laki-laki" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/place_date_of_birth"
+                    android:textAppearance="@style/TextView.CustomFontMedium"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/textStudentPlaceDateOfBirth"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:textAppearance="@style/TextView.CustomFontRegular"
+                    android:textSize="14sp"
+                    tools:text="New York, 20-07-2024" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/address"
+                    android:textAppearance="@style/TextView.CustomFontMedium"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/textStudentAddress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:textAppearance="@style/TextView.CustomFontRegular"
+                    android:textSize="14sp"
+                    tools:text="59394 Cronin Spring East Maritza, VA 19176-5157" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/phone"
+                    android:textAppearance="@style/TextView.CustomFontMedium"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/textStudentPhone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:textAppearance="@style/TextView.CustomFontRegular"
+                    android:textSize="14sp"
+                    tools:text="270-538-8715" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

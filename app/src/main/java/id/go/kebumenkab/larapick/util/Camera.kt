@@ -69,7 +69,7 @@ fun uriToFile(imageUri: Uri, context: Context): File {
 fun File.reduceFileImage(): File {
     val file = this
     val bitmap = BitmapFactory.decodeFile(file.path)
-    var compressQuality = 100
+    var compressQuality = 60
     var streamLength: Int
     do {
         val bmpStream = ByteArrayOutputStream()

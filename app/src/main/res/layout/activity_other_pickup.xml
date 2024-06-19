@@ -85,7 +85,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/student"
-                    android:inputType="none"
+                    android:inputType="textPersonName"
                     android:textAppearance="@style/TextView.CustomFontRegular"
                     android:textSize="14sp"
                     tools:ignore="SpeakableTextPresentCheck,VisualLintTextFieldSize" />

@@ -224,6 +224,8 @@ class OtherPickupActivity : AppCompatActivity() {
             val studentAdapter = ArrayAdapter(this@OtherPickupActivity, R.layout.list_item, studentName)
             autoStudent.setAdapter(studentAdapter)
 
+            autoStudent.threshold = 1
+
             autoStudent.setOnItemClickListener { _, _, position, _ ->
                 selectedStudentId = studentId[position].toString()
                 containerStudent.error = null
@@ -309,12 +311,21 @@ class OtherPickupActivity : AppCompatActivity() {
 
     private fun validateStudentSpinner(): Boolean {
         binding.apply {
-            return if (autoStudent.text.isEmpty()) {
+            val selectedStudentName = autoStudent.text.toString().trim()
+
+            return if (selectedStudentName.isEmpty()) {
                 containerStudent.error = "Siswa harus dipilih"
                 false
             } else {
-                containerStudent.error = null
-                true
+                val position = studentName.indexOf(selectedStudentName)
+                if (position == -1) {
+                    containerStudent.error = "Siswa tidak ditemukan"
+                    false
+                } else {
+                    selectedStudentId = studentId[position].toString()
+                    containerStudent.error = null
+                    true
+                }
             }
         }
     }
